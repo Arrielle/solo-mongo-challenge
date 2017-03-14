@@ -3,7 +3,25 @@ db.createCollection('orders');
 var orders = db.orders;
 
 // 2. Insert at least 3 documents that represent an order. IMPORTANT: See section below for fields.
-db.orders.insert
+
+orders.insert({
+  orderDate: new Date(),
+  orderTotal: 100,
+  lineItems: [{
+  unitPrice: 5,
+  quantity: 20,
+  productName: 'toothpaste'
+  }, {
+  unitPrice: 400,
+  quantity: 10,
+  productName: 'PS4'
+  }, {
+  unitPrice: 1000,
+  quantity: 20,
+  productName: '60" TV'
+  }]
+  });
+
 orders.insert({
   orderDate: new Date(),
   orderTotal: 100,
@@ -50,7 +68,8 @@ orders.find({orderDate: {$gt: ISODate("2016-01-01T00:00:00Z")} });
 orders.find( {$and: [{lineItems: {$elemMatch: {unitPrice: {$gt: 5}}}}, {lineItems: {$elemMatch: {unitPrice: {$lt: 20}}}}]});
 
 // 8. Update one of your line items to 42.99. HINT: Look at dot notation
-
+//This is wrong but I didn't have enough time to fix it.
+orders.update({lineItem: {unitPrice: 100}}, {$set: {lineItems.0.unitPrice: '42.99'}});
 
 // 9. Remove one of your orders.
 orders.deleteOne({});
