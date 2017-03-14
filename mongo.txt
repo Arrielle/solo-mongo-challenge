@@ -1,0 +1,56 @@
+// 1. Create a collection named orders.
+db.createCollection('orders');
+var orders = db.orders;
+
+// 2. Insert at least 3 documents that represent an order. IMPORTANT: See section below for fields.
+db.orders.insert
+orders.insert({
+  orderDate: new Date(),
+  orderTotal: 100,
+  lineItems: [{
+  unitPrice: 5,
+  quantity: 20,
+  productName: 'toothpaste'
+  }]
+  });
+
+orders.insert({
+  orderDate: new Date(),
+  orderTotal: 4000,
+  lineItems: [{
+  unitPrice: 400,
+  quantity: 10,
+  productName: 'PS4'
+  }]
+  });
+
+orders.insert({
+  orderDate: new Date(),
+  orderTotal: 20000,
+  lineItems: [{
+  unitPrice: 1000,
+  quantity: 20,
+  productName: '60" TV'
+  }]
+  });
+
+// 3. Find a single order document, any order document.
+orders.findOne({});
+
+// 4. Find all orders and make them look pretty.
+orders.find({}).pretty();
+
+// 5. Find all orders with an orderDate that is prior to 1/1/2016.
+orders.find({orderDate: {$lt: ISODate("2016-01-01T00:00:00Z")} });
+
+// 6. Find all orders with an orderDate that is after 1/1/2016.
+orders.find({orderDate: {$gt: ISODate("2016-01-01T00:00:00Z")} });
+
+// 7. Find orders with lineItems that have a quantity that is less than 50, but greater than 5. HINT: Look at $and and dot notation.
+orders.find( {$and: [{lineItems: {$elemMatch: {unitPrice: {$gt: 5}}}}, {lineItems: {$elemMatch: {unitPrice: {$lt: 20}}}}]});
+
+// 8. Update one of your line items to 42.99. HINT: Look at dot notation
+
+
+// 9. Remove one of your orders.
+orders.deleteOne({});
